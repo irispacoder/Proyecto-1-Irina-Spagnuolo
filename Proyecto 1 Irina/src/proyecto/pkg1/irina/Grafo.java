@@ -26,6 +26,26 @@ public class Grafo {
     return null;
     }
     
+    /**Metodo que agrega los usuarios*/
+    
+    public void addUsers(String nombre){
+        if (searchUser(nombre)== null) {
+            InfoUsuario nuevoUsuario = new InfoUsuario(nombre);
+            this.users.InsertarFinal(nuevoUsuario);
+            this.cantidad++;
+        }
+    }
+    
+    /**Metodo que agrega la relación que tiene un usuario con otro*/
+    public void addConexion(String persona, String relacionado){
+        InfoUsuario user = searchUser(persona);
+        if (user != null) {
+            InfoUsuario userRelacion = searchUser(relacionado);
+            if (userRelacion != null) {
+                user.conexion.InsertarFinal(relacionado);
+            }
+        }
+    }
     
     
     /** getters */
