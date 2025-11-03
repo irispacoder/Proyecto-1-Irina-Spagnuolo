@@ -16,7 +16,7 @@ public class Grafo {
     
     /** busca el usuario del que se quiere saber */
     public InfoUsuario searchUser(String nombre){
-        Nodo<InfoUsuario> aux = this.users.pfirst;
+        Nodo<InfoUsuario> aux = this.getUsers().pfirst;
         while (aux != null){
             if (aux.getDato().nombre.equals(nombre)){
             return aux.getDato();
@@ -31,7 +31,7 @@ public class Grafo {
     public void addUsers(String nombre){
         if (searchUser(nombre)== null) {
             InfoUsuario nuevoUsuario = new InfoUsuario(nombre);
-            this.users.InsertarFinal(nuevoUsuario);
+            this.getUsers().InsertarFinal(nuevoUsuario);
             this.cantidad++;
         }
     }
@@ -47,9 +47,55 @@ public class Grafo {
         }
     }
     
+    /**Metodo que elimina usuarios ademas tambien elimina su conexion a otros usuarios*/
+    
+    public void deleteUser(String nombre) {
+    Nodo<InfoUsuario> actual = getUsers().pfirst;
+    Nodo<InfoUsuario> previo = null;
+
+    while (actual != null) {
+        if (actual.getDato().nombre.equals(nombre)) {
+            if (previo == null) {
+                users.pfirst = actual.getPnext();
+            } else {
+                previo.setPnext(actual.getPnext());
+            }
+            cantidad--;
+            break;
+        }
+        previo = actual;
+        actual = actual.getPnext();
+    }
+
+    Nodo<InfoUsuario> ref = getUsers().pfirst;
+    while (ref != null) {
+        Lista<String> conexiones = ref.getDato().conexion;
+        Nodo<String> aux = conexiones.pfirst;
+        Nodo<String> prev = null;
+
+        while (aux != null) {
+            if (aux.getDato().equals(nombre)) {
+                if (prev == null) {
+                    conexiones.pfirst = aux.getPnext();
+                } else {
+                    prev.setPnext(aux.getPnext());
+                }
+                conexiones.size--;
+                break;
+            }
+            prev = aux;
+            aux = aux.getPnext();
+        }
+
+        ref = ref.getPnext();
+    }
+    
+
+    
     
     /** getters */
 
+    }
     /**
      * @return the users
      */
@@ -63,9 +109,5 @@ public class Grafo {
     public int getCantidad() {
         return cantidad;
     }
-    
-    
-    
-    
 }
 
