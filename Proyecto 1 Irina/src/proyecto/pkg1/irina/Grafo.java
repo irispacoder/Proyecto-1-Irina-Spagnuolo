@@ -47,6 +47,22 @@ public class Grafo {
         }
     }
     
+    /**Metodo para imprimir el grafo, hasta ahora este metodo es solo para hacer pruebas*/
+    public void printGrafo(){
+    Nodo<InfoUsuario> actual = getUsers().pfirst;
+        while (actual != null) {
+            InfoUsuario u = actual.getDato();
+            System.out.println("@" + u.nombre + "-");
+            Nodo<String> aux = u.conexion.pfirst;
+            while (aux != null) {
+            System.out.print("@" + aux.getDato() + " ");
+            aux = aux.getPnext();
+        }
+        System.out.println();
+        actual = actual.getPnext();
+        }
+    }
+    
     /**Metodo que elimina usuarios ademas tambien elimina su conexion a otros usuarios*/
     
     public void deleteUser(String nombre) {
@@ -90,6 +106,12 @@ public class Grafo {
         ref = ref.getPnext();
     }
     
+    
+
+    
+
+    
+
 
     
     
