@@ -4,17 +4,18 @@
  */
 package proyecto.pkg1.irina;
 
-/**
- *
- * @author Adriana
- */
+import Interfaces.InterfazMAIN;
+
+
 public class Proyecto1Irina {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-      
+      InterfazMAIN Inter = new InterfazMAIN();
+      Inter.setLocationRelativeTo(null);
+      Inter.setVisible(true);
     }
     
 }

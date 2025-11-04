@@ -3,19 +3,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Interfaces;
+import javax.swing.JOptionPane;
+import proyecto.pkg1.irina.Grafo;
 
-
-/**
- *
- * @author Adriana
- */
 public class InterfazMAIN extends javax.swing.JFrame {
+    private Grafo grafo;
 
     /**
      * Creates new form InterfazMAIN
      */
     public InterfazMAIN() {
         initComponents();
+        grafo = new Grafo();
     }
 
     /**
@@ -51,14 +50,14 @@ public class InterfazMAIN extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel1.setText("Análisis de redes sociales");
 
-        BotonCargarArchivos.setBackground(new java.awt.Color(0, 51, 51));
+        BotonCargarArchivos.setBackground(new java.awt.Color(153, 204, 255));
         BotonCargarArchivos.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         BotonCargarArchivos.setText("Cargar Archivo");
 
         jLabel2.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         jLabel2.setText("Si hay cambios en los usuarios haga click en actualizar");
 
-        BotonAgregarUSER.setBackground(new java.awt.Color(0, 51, 51));
+        BotonAgregarUSER.setBackground(new java.awt.Color(153, 204, 255));
         BotonAgregarUSER.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         BotonAgregarUSER.setText("Agregar usuario");
         BotonAgregarUSER.addActionListener(new java.awt.event.ActionListener() {
@@ -67,7 +66,7 @@ public class InterfazMAIN extends javax.swing.JFrame {
             }
         });
 
-        BotonAgregarCONEXION.setBackground(new java.awt.Color(0, 51, 51));
+        BotonAgregarCONEXION.setBackground(new java.awt.Color(153, 204, 255));
         BotonAgregarCONEXION.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         BotonAgregarCONEXION.setText("Agregar conexión");
         BotonAgregarCONEXION.addActionListener(new java.awt.event.ActionListener() {
@@ -76,7 +75,7 @@ public class InterfazMAIN extends javax.swing.JFrame {
             }
         });
 
-        BotonEliminarUSER.setBackground(new java.awt.Color(0, 51, 51));
+        BotonEliminarUSER.setBackground(new java.awt.Color(153, 204, 255));
         BotonEliminarUSER.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         BotonEliminarUSER.setText("Eliminar usuario");
         BotonEliminarUSER.addActionListener(new java.awt.event.ActionListener() {
@@ -88,7 +87,7 @@ public class InterfazMAIN extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         jLabel3.setText("Usuarios");
 
-        BotonActualizar.setBackground(new java.awt.Color(0, 51, 51));
+        BotonActualizar.setBackground(new java.awt.Color(153, 204, 255));
         BotonActualizar.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         BotonActualizar.setText("Actualizar");
 
@@ -189,15 +188,45 @@ public class InterfazMAIN extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BotonAgregarUSERActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAgregarUSERActionPerformed
-        // TODO add your handling code here:
+
+        String nombre = InputAgregarUser.getText().trim();
+        if (!nombre.isEmpty()) {
+            grafo.addUsers(nombre);
+            JOptionPane.showMessageDialog(this, "El usuario que usted agrego fue: " + nombre);
+            InputAgregarUser.setText("");
+        }else{
+            JOptionPane.showMessageDialog(this, "Ingresa un nombre de usuario valido por favor :)");
+        }
     }//GEN-LAST:event_BotonAgregarUSERActionPerformed
 
     private void BotonAgregarCONEXIONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAgregarCONEXIONActionPerformed
         // TODO add your handling code here:
+        try {
+            String texto = InputAgregarConexion.getText().trim();
+            if (texto.contains(",")) {
+                String[] partesTexto = texto.split(",");
+                String enlace1 = partesTexto[0].trim();
+                String enlace2 = partesTexto[1].trim();
+                grafo.addConexion(enlace1, enlace2);
+                JOptionPane.showMessageDialog(this, "Se agrego la conexio: " + enlace1 + "," + enlace2);
+                InputAgregarConexion.setText("");                
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Formato invalido, ingreselo como: usuario1,usuario2");
+        }
     }//GEN-LAST:event_BotonAgregarCONEXIONActionPerformed
 
     private void BotonEliminarUSERActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonEliminarUSERActionPerformed
-        // TODO add your handling code here:
+        try {
+            String nombre = InputElimUser.getText().trim();
+            if (!nombre.isEmpty()) {
+                grafo.deleteUser(nombre);
+                JOptionPane.showMessageDialog(this, "Elimino a:" + nombre + "de la lista de usarios");
+                InputElimUser.setText("");                
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un nombre válido");
+        }
     }//GEN-LAST:event_BotonEliminarUSERActionPerformed
 
     /**
