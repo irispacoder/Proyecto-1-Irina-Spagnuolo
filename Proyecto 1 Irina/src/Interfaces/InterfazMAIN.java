@@ -8,6 +8,7 @@ import proyecto.pkg1.irina.Grafo;
 
 public class InterfazMAIN extends javax.swing.JFrame {
     private Grafo grafo;
+    private Archivos.LectorArchivo Lector;
 
     /**
      * Creates new form InterfazMAIN
@@ -15,6 +16,7 @@ public class InterfazMAIN extends javax.swing.JFrame {
     public InterfazMAIN() {
         initComponents();
         grafo = new Grafo();
+        Lector = new Archivos.LectorArchivo();
     }
 
     /**
@@ -53,9 +55,20 @@ public class InterfazMAIN extends javax.swing.JFrame {
         BotonCargarArchivos.setBackground(new java.awt.Color(153, 204, 255));
         BotonCargarArchivos.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         BotonCargarArchivos.setText("Cargar Archivo");
+        BotonCargarArchivos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonCargarArchivosActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         jLabel2.setText("Si hay cambios en los usuarios haga click en actualizar");
+
+        InputAgregarUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                InputAgregarUserActionPerformed(evt);
+            }
+        });
 
         BotonAgregarUSER.setBackground(new java.awt.Color(153, 204, 255));
         BotonAgregarUSER.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
@@ -84,8 +97,14 @@ public class InterfazMAIN extends javax.swing.JFrame {
             }
         });
 
+        InputElimUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                InputElimUserActionPerformed(evt);
+            }
+        });
+
         jLabel3.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        jLabel3.setText("Usuarios");
+        jLabel3.setText("Usuarios: agreguelos de la siguiente manera, @nombre");
 
         BotonActualizar.setBackground(new java.awt.Color(153, 204, 255));
         BotonActualizar.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
@@ -102,37 +121,13 @@ public class InterfazMAIN extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(243, 243, 243)
                 .addComponent(jLabel1)
-                .addGap(116, 116, 116)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(69, 69, 69))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(305, 305, 305)
-                                        .addComponent(InputElimUser, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(60, 60, 60)
-                                        .addComponent(InputAgregarConexion, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(46, 46, 46)
-                                    .addComponent(jLabel4)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(62, 62, 62)
-                                .addComponent(BotonCargarArchivos)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(InputAgregarUser, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(BotonAgregarCONEXION)
-                            .addComponent(BotonAgregarUSER)
-                            .addComponent(BotonEliminarUSER)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(75, 75, 75)
                         .addComponent(jLabel2))
@@ -142,7 +137,31 @@ public class InterfazMAIN extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(166, 166, 166)
                         .addComponent(jLabel5)))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(InputElimUser, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(InputAgregarConexion, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(InputAgregarUser, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(BotonEliminarUSER)
+                    .addComponent(BotonAgregarCONEXION)
+                    .addComponent(BotonAgregarUSER))
+                .addGap(62, 62, 62))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(79, 79, 79)
+                .addComponent(BotonCargarArchivos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 195, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addGap(32, 32, 32))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,38 +169,38 @@ public class InterfazMAIN extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(55, 55, 55)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(25, 25, 25))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(2, 2, 2)
+                .addComponent(jLabel3)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(jLabel3)
-                        .addGap(12, 12, 12)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(BotonAgregarUSER)
                             .addComponent(InputAgregarUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(BotonAgregarCONEXION)
-                            .addComponent(InputAgregarConexion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabel4)
+                            .addComponent(InputAgregarConexion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BotonCargarArchivos))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(InputElimUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BotonEliminarUSER))
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(BotonActualizar)
                         .addGap(18, 18, 18)
-                        .addComponent(BotonCargarArchivos)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BotonEliminarUSER)
-                    .addComponent(InputElimUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(BotonActualizar)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(247, Short.MAX_VALUE))
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addComponent(jLabel4)))
+                .addContainerGap(245, Short.MAX_VALUE))
         );
 
         pack();
@@ -189,12 +208,14 @@ public class InterfazMAIN extends javax.swing.JFrame {
 
     private void BotonAgregarUSERActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAgregarUSERActionPerformed
 
-        String nombre = InputAgregarUser.getText().trim();
-        if (!nombre.isEmpty()) {
-            grafo.addUsers(nombre);
-            JOptionPane.showMessageDialog(this, "El usuario que usted agrego fue: " + nombre);
-            InputAgregarUser.setText("");
-        }else{
+        try {
+            String nombre = InputAgregarUser.getText().trim();
+            if (!nombre.isEmpty()) {
+                grafo.addUsers(nombre);
+                JOptionPane.showMessageDialog(this, "El usuario que usted agrego fue: " + nombre);
+                InputAgregarUser.setText("");
+            }
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Ingresa un nombre de usuario valido por favor :)");
         }
     }//GEN-LAST:event_BotonAgregarUSERActionPerformed
@@ -228,6 +249,27 @@ public class InterfazMAIN extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Ingrese un nombre válido");
         }
     }//GEN-LAST:event_BotonEliminarUSERActionPerformed
+
+    private void InputAgregarUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InputAgregarUserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_InputAgregarUserActionPerformed
+
+    private void InputElimUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InputElimUserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_InputElimUserActionPerformed
+
+    private void BotonCargarArchivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonCargarArchivosActionPerformed
+        try {
+            Grafo newGrafo = Lector.CargarGrafodesdeArchivo();
+            if (newGrafo != null) {
+                this.grafo = newGrafo;
+                grafo.printGrafo();
+                JOptionPane.showMessageDialog(this, "Su archivo fue cargado y listo para su uso");   
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "No se pudo cargar el archivo, asegurese de que eligio el correcto y que este sea un archivo txt");
+        }
+    }//GEN-LAST:event_BotonCargarArchivosActionPerformed
 
     /**
      * @param args the command line arguments
