@@ -17,10 +17,12 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class LectorArchivo {
     private boolean datosmod;
+    private File archivoOriginal;
 
     public LectorArchivo() {
         this.datosmod = false;
@@ -51,6 +53,7 @@ public class LectorArchivo {
         
         if (resultado == JFileChooser.APPROVE_OPTION) {
             File archivo = fileChooser.getSelectedFile();
+            this.archivoOriginal = archivo;
             try {
                 /** Crear un nuevo grafo y leer el archivo */
                 Grafo grafo = new Grafo();
@@ -110,13 +113,13 @@ public class LectorArchivo {
                     }
 
                     if (coma != -1) {
-                        String origen = linea.substring(0, coma).trim().substring(1); /** quita el @ */
-                        String destino = linea.substring(coma + 1).trim().substring(1); /** quita el @ */
+                        String enlace1 = linea.substring(0, coma).trim().substring(1); /** quita el @ */
+                        String enlace2 = linea.substring(coma + 1).trim().substring(1); /** quita el @ */
                         /** se agregan los usuarios en caso de no existir */
-                        grafo.addUsers(origen); 
-                        grafo.addUsers(destino);
+                        grafo.addUsers(enlace1); 
+                        grafo.addUsers(enlace2);
                         /** se agrega la conexion */
-                        grafo.addConexion(origen, destino);
+                        grafo.addConexion(enlace1, enlace2);
                     }
                 }
             }
@@ -126,6 +129,42 @@ public class LectorArchivo {
      /** Método para cuando el usuario guarde */
     public void Guardado() {
         this.datosmod = false;
+    }
+    
+    /**Metodo para Actuualizar el repositorio*/
+    
+    public void actualizarRepo(Grafo grafo){
+        if (archivoOriginal == null) {
+            JOptionPane.showMessageDialog(null, "No hay archivo para actualizar");
+            return;
+        }
+        
+        try (PrintWriter pw = new PrintWriter(archivoOriginal) ){
+            pw.println("usuarios");
+            Nodo<InfoUsuario> actual = grafo.getUsers().pfirst;
+            while (actual != null) {
+              pw.println("@" + actual.getDato().nombre);
+              actual = actual.getPnext();    
+            }
+            
+            pw.println(); // línea en blanco
+            pw.println("relaciones entre usuarios");
+            actual = grafo.getUsers().pfirst;
+            while (actual != null) {
+                String enlace1 = actual.getDato().nombre;
+                Nodo<String> conexion = actual.getDato().conexion.pfirst;
+                while (conexion != null) {
+                    String enlace2 = conexion.getDato();
+                    pw.println("@" + enlace1 + "," + "@" + enlace2);
+                    conexion = conexion.getPnext();
+                }
+                actual = actual.getPnext();
+                
+            }
+            JOptionPane.showMessageDialog(null, "Su repositorio esta actualizado");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al actualizar el repositorio");
+        }
     }
     
     

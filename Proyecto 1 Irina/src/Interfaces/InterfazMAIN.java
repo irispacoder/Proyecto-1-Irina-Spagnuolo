@@ -109,6 +109,11 @@ public class InterfazMAIN extends javax.swing.JFrame {
         BotonActualizar.setBackground(new java.awt.Color(153, 204, 255));
         BotonActualizar.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         BotonActualizar.setText("Actualizar");
+        BotonActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonActualizarActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         jLabel4.setText("Cargue el documento txt");
@@ -242,7 +247,7 @@ public class InterfazMAIN extends javax.swing.JFrame {
             String nombre = InputElimUser.getText().trim();
             if (!nombre.isEmpty()) {
                 grafo.deleteUser(nombre);
-                JOptionPane.showMessageDialog(this, "Elimino a:" + nombre + "de la lista de usarios");
+                JOptionPane.showMessageDialog(this, "Elimino a: " + nombre + " de la lista de usarios");
                 InputElimUser.setText("");                
             }
         } catch (Exception e) {
@@ -270,6 +275,10 @@ public class InterfazMAIN extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No se pudo cargar el archivo, asegurese de que eligio el correcto y que este sea un archivo txt");
         }
     }//GEN-LAST:event_BotonCargarArchivosActionPerformed
+
+    private void BotonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonActualizarActionPerformed
+        Lector.actualizarRepo(grafo);
+    }//GEN-LAST:event_BotonActualizarActionPerformed
 
     /**
      * @param args the command line arguments

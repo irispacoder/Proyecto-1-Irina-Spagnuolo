@@ -13,9 +13,9 @@ public class Proyecto1Irina {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-      //InterfazMAIN Inter = new InterfazMAIN();
-      //Inter.setLocationRelativeTo(null);
-      //Inter.setVisible(true);
+      InterfazMAIN Inter = new InterfazMAIN();
+      Inter.setLocationRelativeTo(null);
+      Inter.setVisible(true);
       
       /**Esto lo estoy utilizando para hacer pruebas*/
 
