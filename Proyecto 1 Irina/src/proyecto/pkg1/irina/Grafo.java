@@ -28,12 +28,14 @@ public class Grafo {
     
     /**Metodo que agrega los usuarios*/
     
-    public void addUsers(String nombre){
+    public boolean addUsers(String nombre){
         if (searchUser(nombre)== null) {
             InfoUsuario nuevoUsuario = new InfoUsuario(nombre);
             this.getUsers().InsertarFinal(nuevoUsuario);
             this.cantidad++;
+            return true;
         }
+        return false;
     }
     
     /**Metodo que agrega la relación que tiene un usuario con otro*/
@@ -108,22 +110,123 @@ public class Grafo {
     }
     
     public void Kosaraju(){
-        Pila pila1 = new Pila();
-        boolean[] visitados = new boolean[cantidad];
-        for (int i = 0; i < cantidad; i++) {
-            if (visitados[i] == false) {
-                DFS(i,visitados, pila1);
-                
-            }
-            
+        Pila<String> pila = new Pila<>();
+        Nodo<InfoUsuario> actual = users.pfirst;
+        while (actual != null) {
+            actual.getDato().visitado = false;
+            actual = actual.getPnext();
+        }
+
+    actual = users.pfirst;
+    while (actual != null) {
+        InfoUsuario u = actual.getDato();
+        if (!u.visitado) {
+            DFS1(u, pila);
+        }
+        actual = actual.getPnext();
+    }
+
+    Grafo transpuesto = this.transponer();
+
+    Nodo<InfoUsuario> actualTrans = transpuesto.users.pfirst;
+    while (actualTrans != null) {
+        actualTrans.getDato().visitado = false;
+        actualTrans = actualTrans.getPnext();
+    }
+
+    int cfcID=1;
+    while (!pila.es_vacio()) {
+        String nombre = pila.Quitar();
+        InfoUsuario u = transpuesto.searchUser(nombre);
+        if (u != null && !u.visitado) {
+            transpuesto.DFStrans(u, cfcID);
+            cfcID++;
         }
     }
+
+    actual = users.pfirst;
+    while (actual != null) {
+        InfoUsuario u = actual.getDato();
+        InfoUsuario userTrans = transpuesto.searchUser(u.nombre);
+        if (userTrans != null) {
+            u.cfcID = userTrans.cfcID;
+        }
+        actual = actual.getPnext();
+    }
+
+}
     
-    public void DFS(int i,boolean[] visitados,Pila pila1){
-        visitados[i] = true;
+    public void DFS1(InfoUsuario u, Pila<String> pila){
+        u.visitado = true;
+        Nodo<String> vecino = u.conexion.pfirst;
+        while (vecino!=null) {
+            InfoUsuario siguiente = searchUser(vecino.getDato());
+            if (siguiente != null && !siguiente.visitado) {
+                DFS1(siguiente, pila);
+            }
+            vecino = vecino.getPnext();
+        }
+        pila.Agregar(u.nombre);
+    }
+    
+    public Grafo transponer(){
+        Grafo transpuesto = new Grafo();
+        Nodo<InfoUsuario> actual = users.pfirst;
         
+        while (actual != null) {
+            transpuesto.addUsers(actual.getDato().nombre);
+            actual = actual.getPnext();
+        }
+        actual = users.pfirst;
+        while (actual!=null) {
+            String enlace1 = actual.getDato().nombre;
+            Nodo<String> conexiones = actual.getDato().conexion.pfirst;
+            while (conexiones!=null) {
+                String enlace2 = conexiones.getDato();
+                transpuesto.addConexion(enlace2, enlace1);
+                conexiones = conexiones.getPnext();
+            }
+        actual = actual.getPnext();
+        }
+        return transpuesto;
+    }
+    
+    public void DFStrans(InfoUsuario u, int cfcID){
+        u.visitado = true;
+        u.cfcID = cfcID;
+        Nodo<String> vecino = u.conexion.pfirst;
+        while (vecino != null) {
+            InfoUsuario siguiente = searchUser(vecino.getDato());
+            if (siguiente != null && !siguiente.visitado) {
+                DFStrans(siguiente, cfcID);
+            }
+            vecino = vecino.getPnext();
+        }
         
     }
+    
+    public String tipoRelacion(String nombre) {
+        InfoUsuario u = searchUser(nombre);
+        if (u == null) return "solo";
+
+        boolean sigueAAlguien = u.conexion.size > 0;
+        boolean esSeguido = false;
+
+        Nodo<InfoUsuario> actual = users.pfirst;
+        while (actual != null) {
+            InfoUsuario otro = actual.getDato();
+            if (!otro.nombre.equals(nombre) && otro.conexion.indice(nombre) != -1) {
+                esSeguido = true;
+                break;
+            }
+        actual = actual.getPnext();
+    }
+
+        if (sigueAAlguien && esSeguido) return "mutuo";
+        if (sigueAAlguien || esSeguido) return "unico";
+        return "solo";
+    }
+    
     
     
     
@@ -144,14 +247,14 @@ public class Grafo {
      * @return the users
      */
     public Lista<InfoUsuario> getUsers() {
-        return users;
+        return this.users;
     }
 
     /**
      * @return the cantidad
      */
     public int getCantidad() {
-        return cantidad;
+        return this.cantidad;
     }
 }
 

@@ -1,8 +1,17 @@
 usuarios
-@sara
 @sofia
-@matias
+@luis
+@natalia
+@arturo
+@miguel
+@juan
+@maria
+@capitan
 
 relaciones entre usuarios
-@sara,@sofia
-@sofia,@sara
+@luis,@natalia
+@luis,@arturo
+@arturo,@luis
+@miguel,@capitan
+@juan,@maria
+@capitan,@miguel

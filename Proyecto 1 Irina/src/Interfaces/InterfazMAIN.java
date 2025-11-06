@@ -237,9 +237,13 @@ public class InterfazMAIN extends javax.swing.JFrame {
         try {
             String nombre = InputAgregarUser.getText().trim();
             if (!nombre.isEmpty()) {
-                grafo.addUsers(nombre);
-                JOptionPane.showMessageDialog(this, "El usuario que usted agrego fue: " + nombre);
-                InputAgregarUser.setText("");
+                boolean agregando = grafo.addUsers(nombre);
+                if (agregando) {
+                    JOptionPane.showMessageDialog(this, "El usuario que usted agrego fue: " + nombre);
+                    InputAgregarUser.setText("");
+                }else{
+                    JOptionPane.showMessageDialog(this, "El usuario que usted ingreso ya existe en la lista, ingrese uno diferente");
+                }
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Ingresa un nombre de usuario valido por favor :)");
@@ -313,19 +317,12 @@ public class InterfazMAIN extends javax.swing.JFrame {
         }
         
         if (grafo != null && grafo.getCantidad() > 0) {
-        GraphStreamGrafo.Show(grafo);
-    } else {
-        JOptionPane.showMessageDialog(this, "No hay grafo cargado o está vacío.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-    }
+            grafo.Kosaraju();
+            GraphStreamGrafo.Show(grafo);
+        } else {
+            JOptionPane.showMessageDialog(this, "No hay grafo cargado o está vacío.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
 
-
-//try {
-            //if (grafo != null) {
-                //GraphStreamGrafo.Show(grafo);
-            //}
-        //} catch (Exception e) {
-           // JOptionPane.showMessageDialog(this, "No hay grafo para visualizar");
-        //}
     }//GEN-LAST:event_BotonVisualizarGrafoActionPerformed
 
     /**

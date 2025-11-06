@@ -5,21 +5,26 @@
 package proyecto.pkg1.irina;
 
 public class NodoPila {
-    private int NodoPila;
+    private int dato;
     private NodoPila next;
 
-    /**
-     * @return the NodoPila
-     */
-    public int getNodoPila() {
-        return NodoPila;
+    public NodoPila(int dato) {
+        this.dato = dato;
+        this.next = null;
     }
 
     /**
-     * @param NodoPila the NodoPila to set
+     * @return the dato
      */
-    public void setNodoPila(int NodoPila) {
-        this.NodoPila = NodoPila;
+    public int getDato() {
+        return dato;
+    }
+
+    /**
+     * @param dato the dato to set
+     */
+    public void setDato(int dato) {
+        this.dato = dato;
     }
 
     /**
@@ -35,6 +40,10 @@ public class NodoPila {
     public void setNext(NodoPila next) {
         this.next = next;
     }
+    
+    
+
+    
     
     
     
