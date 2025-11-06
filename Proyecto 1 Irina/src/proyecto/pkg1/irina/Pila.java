@@ -9,8 +9,10 @@ package proyecto.pkg1.irina;
  * Se crea una pila que va a utilizar como estructura subyacente una 
  * lista simple
  */
-public class Pila<T> {
-    private Lista<T> lista;
+public class Pila<T> { 
+    private int dato;
+    private NodoPila siguiente;
+
 
     public Pila() {
         this.lista = new Lista<>();
@@ -41,4 +43,6 @@ public class Pila<T> {
         }
     return lista.ObtenerIndice(0);
     } 
+
+    
 }

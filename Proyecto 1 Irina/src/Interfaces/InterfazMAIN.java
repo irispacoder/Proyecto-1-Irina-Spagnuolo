@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Interfaces;
+import VisualesGrafo.GraphStreamGrafo;
 import javax.swing.JOptionPane;
 import proyecto.pkg1.irina.Grafo;
 
@@ -44,6 +45,7 @@ public class InterfazMAIN extends javax.swing.JFrame {
         BotonActualizar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        BotonVisualizarGrafo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -121,6 +123,15 @@ public class InterfazMAIN extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel5.setText("Visualización del Grafo");
 
+        BotonVisualizarGrafo.setBackground(new java.awt.Color(153, 204, 255));
+        BotonVisualizarGrafo.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        BotonVisualizarGrafo.setText("Visualizar");
+        BotonVisualizarGrafo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonVisualizarGrafoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -167,6 +178,10 @@ public class InterfazMAIN extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 195, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(32, 32, 32))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(204, 204, 204)
+                .addComponent(BotonVisualizarGrafo)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,12 +215,14 @@ public class InterfazMAIN extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(BotonActualizar)
-                        .addGap(18, 18, 18)
+                        .addGap(60, 60, 60)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(11, 11, 11)
                         .addComponent(jLabel4)))
-                .addContainerGap(245, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(BotonVisualizarGrafo)
+                .addContainerGap(155, Short.MAX_VALUE))
         );
 
         pack();
@@ -213,6 +230,10 @@ public class InterfazMAIN extends javax.swing.JFrame {
 
     private void BotonAgregarUSERActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAgregarUSERActionPerformed
 
+        if (grafo == null || grafo.getCantidad() == 0) {
+            JOptionPane.showMessageDialog(this, "Aun no hay un archivo cargado", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         try {
             String nombre = InputAgregarUser.getText().trim();
             if (!nombre.isEmpty()) {
@@ -227,6 +248,11 @@ public class InterfazMAIN extends javax.swing.JFrame {
 
     private void BotonAgregarCONEXIONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAgregarCONEXIONActionPerformed
         // TODO add your handling code here:
+        if (grafo == null || grafo.getCantidad() == 0) {
+            JOptionPane.showMessageDialog(this, "Aun no hay un archivo cargado", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
         try {
             String texto = InputAgregarConexion.getText().trim();
             if (texto.contains(",")) {
@@ -280,6 +306,28 @@ public class InterfazMAIN extends javax.swing.JFrame {
         Lector.actualizarRepo(grafo);
     }//GEN-LAST:event_BotonActualizarActionPerformed
 
+    private void BotonVisualizarGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonVisualizarGrafoActionPerformed
+        if (grafo == null || grafo.getCantidad() == 0) {
+            JOptionPane.showMessageDialog(this, "Aun no hay un archivo cargado", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        if (grafo != null && grafo.getCantidad() > 0) {
+        GraphStreamGrafo.Show(grafo);
+    } else {
+        JOptionPane.showMessageDialog(this, "No hay grafo cargado o está vacío.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+    }
+
+
+//try {
+            //if (grafo != null) {
+                //GraphStreamGrafo.Show(grafo);
+            //}
+        //} catch (Exception e) {
+           // JOptionPane.showMessageDialog(this, "No hay grafo para visualizar");
+        //}
+    }//GEN-LAST:event_BotonVisualizarGrafoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -321,6 +369,7 @@ public class InterfazMAIN extends javax.swing.JFrame {
     private javax.swing.JButton BotonAgregarUSER;
     private javax.swing.JButton BotonCargarArchivos;
     private javax.swing.JButton BotonEliminarUSER;
+    private javax.swing.JButton BotonVisualizarGrafo;
     private javax.swing.JTextField InputAgregarConexion;
     private javax.swing.JTextField InputAgregarUser;
     private javax.swing.JTextField InputElimUser;

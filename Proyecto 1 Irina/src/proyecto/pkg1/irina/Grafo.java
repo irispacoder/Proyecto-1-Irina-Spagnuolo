@@ -49,15 +49,15 @@ public class Grafo {
     
     /**Metodo para imprimir el grafo, hasta ahora este metodo es solo para hacer pruebas*/
     public void printGrafo(){
-    Nodo<InfoUsuario> actual = getUsers().pfirst;
-        while (actual != null) {
-            InfoUsuario u = actual.getDato();
-            System.out.println("@" + u.nombre + "-");
-            Nodo<String> aux = u.conexion.pfirst;
-            while (aux != null) {
-            System.out.print("@" + aux.getDato() + " ");
-            aux = aux.getPnext();
-        }
+        Nodo<InfoUsuario> actual = getUsers().pfirst;
+            while (actual != null) {
+                InfoUsuario u = actual.getDato();
+                System.out.println("@" + u.nombre + "-");
+                Nodo<String> aux = u.conexion.pfirst;
+                while (aux != null) {
+                System.out.print("@" + aux.getDato() + " ");
+                aux = aux.getPnext();
+            }
         System.out.println();
         actual = actual.getPnext();
         }
@@ -66,45 +66,67 @@ public class Grafo {
     /**Metodo que elimina usuarios ademas tambien elimina su conexion a otros usuarios*/
     
     public void deleteUser(String nombre) {
-    Nodo<InfoUsuario> actual = getUsers().pfirst;
-    Nodo<InfoUsuario> previo = null;
+        Nodo<InfoUsuario> actual = getUsers().pfirst;
+        Nodo<InfoUsuario> previo = null;
 
-    while (actual != null) {
-        if (actual.getDato().nombre.equals(nombre)) {
-            if (previo == null) {
-                users.pfirst = actual.getPnext();
-            } else {
-                previo.setPnext(actual.getPnext());
-            }
+        while (actual != null) {
+            if (actual.getDato().nombre.equals(nombre)) {
+                if (previo == null) {
+                    users.pfirst = actual.getPnext();
+                } else {
+                    previo.setPnext(actual.getPnext());
+                }
             cantidad--;
             break;
-        }
+            }
         previo = actual;
         actual = actual.getPnext();
     }
 
     Nodo<InfoUsuario> ref = getUsers().pfirst;
-    while (ref != null) {
-        Lista<String> conexiones = ref.getDato().conexion;
-        Nodo<String> aux = conexiones.pfirst;
-        Nodo<String> prev = null;
+        while (ref != null) {
+            Lista<String> conexiones = ref.getDato().conexion;
+            Nodo<String> aux = conexiones.pfirst;
+            Nodo<String> prev = null;
 
-        while (aux != null) {
-            if (aux.getDato().equals(nombre)) {
-                if (prev == null) {
-                    conexiones.pfirst = aux.getPnext();
-                } else {
-                    prev.setPnext(aux.getPnext());
-                }
+            while (aux != null) {
+                if (aux.getDato().equals(nombre)) {
+                    if (prev == null) {
+                        conexiones.pfirst = aux.getPnext();
+                    } else {
+                        prev.setPnext(aux.getPnext());
+                    }
                 conexiones.size--;
                 break;
-            }
+                }
             prev = aux;
             aux = aux.getPnext();
-        }
+            }
 
         ref = ref.getPnext();
+        }
     }
+    
+    public void Kosaraju(){
+        Pila pila1 = new Pila();
+        boolean[] visitados = new boolean[cantidad];
+        for (int i = 0; i < cantidad; i++) {
+            if (visitados[i] == false) {
+                DFS(i,visitados, pila1);
+                
+            }
+            
+        }
+    }
+    
+    public void DFS(int i,boolean[] visitados,Pila pila1){
+        visitados[i] = true;
+        
+        
+    }
+    
+    
+    
     
     
 
@@ -117,7 +139,7 @@ public class Grafo {
     
     /** getters */
 
-    }
+    
     /**
      * @return the users
      */
