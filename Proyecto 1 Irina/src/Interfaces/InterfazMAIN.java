@@ -385,7 +385,6 @@ public class InterfazMAIN extends javax.swing.JFrame {
             Grafo newGrafo = Lector.CargarGrafodesdeArchivo();
             if (newGrafo != null) {
                 this.grafoActual = newGrafo;
-                grafoActual.printGrafo();
                 JOptionPane.showMessageDialog(this, "Su archivo fue cargado y listo para su uso");   
             }
         } catch (Exception e) {

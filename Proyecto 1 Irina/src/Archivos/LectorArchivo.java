@@ -7,8 +7,9 @@ import proyecto.pkg1.irina.Grafo;
 import proyecto.pkg1.irina.InfoUsuario;
 import proyecto.pkg1.irina.Nodo;
 
-/**Imports permitidos para usar en el proyecto*/
-
+/**Imports permitidos para usar en el proyecto
+ * 
+ */
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import java.io.File;
@@ -19,14 +20,25 @@ import java.io.PrintWriter;
 import java.io.FileWriter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+/**Esta es la clase que se encarga de la lectura y escritura de archvos txt
+ * que contienen los usuarios y sus relaciones
+ * 
+ */
 public class LectorArchivo {
     private boolean datosmod;
     private File archivoOriginal;
 
+    /**Constructor
+     * 
+     */
     public LectorArchivo() {
         this.datosmod = false;
     }
     
+    /**Carga un archivo txt seleccionado por el usuarios e inicializa el grafo con los nombres de usuarios y sus conexiones
+     * 
+     * @return Grafo construido con el archivo o null si hubo un error
+     */
     public Grafo CargarGrafodesdeArchivo(){
         if (this.datosmod){
             int respuesta = JOptionPane.showConfirmDialog(null, "No se han guardado los datos, se perderan los datos", "Advertencia",
@@ -38,7 +50,9 @@ public class LectorArchivo {
     }
     
         
-        /**Elige el archivo correcto, en este caso solo permite archivos txt*/
+    /**Elige el archivo correcto, en este caso solo permite archivos txt
+     * 
+     */
     JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Seleccione un archivo .txt");
         
@@ -50,6 +64,9 @@ public class LectorArchivo {
         
     
         
+        /**Aqui se revisa que si el archivo esta vacio se le agregen los titulos "usuaro" y "relaciones entre usuarios" para que pueda ser utilizado
+         * 
+         */
         if (resultado == JFileChooser.APPROVE_OPTION) {
             File archivo = fileChooser.getSelectedFile();
             this.archivoOriginal = archivo;
@@ -68,7 +85,9 @@ public class LectorArchivo {
                 
             }
             try {
-                /** Crear un nuevo grafo y leer el archivo */
+                /** Crear un nuevo grafo y leer el archivo 
+                 * 
+                 */
                 Grafo grafo = new Grafo();
                 LeerArchivoTXT(archivo, grafo);
                 
@@ -87,9 +106,15 @@ public class LectorArchivo {
     
     
         
-    /** Metodo que lee el archivo txt */
+    /** Metodo que lee el archivo txt
+     * 
+     * @param archivo
+     * @param grafo
+     * @throws IOException
+     * @throws Exception 
+     */
     private void LeerArchivoTXT(File archivo, Grafo grafo) throws IOException, Exception {
-        String estado = "inicio"; /** para saber que se esta leyendo si usuarios o relaciones */ 
+        String estado = "inicio"; 
 
         try (FileReader fr = new FileReader(archivo);
              BufferedReader br = new BufferedReader(fr)) {
@@ -99,7 +124,9 @@ public class LectorArchivo {
                 linea = linea.trim();
                 if (linea.isEmpty()) continue;
 
-                /** Detecta si es un usario o es relacion*/
+                /** Detecta si es un usario o es relacion
+                 * 
+                 */
                 if (linea.equalsIgnoreCase("usuarios")) {
                     estado = "usuarios";
                     continue;
@@ -108,14 +135,15 @@ public class LectorArchivo {
                     continue;
                 }
 
-                /** ve cada linea de acuerdo a la seccion */
+                /** ve cada linea de acuerdo a la seccion
+                 * 
+                 */
                 if (estado.equals("usuarios")) {
                     if (linea.startsWith("@")) {
-                        grafo.addUsers(linea.substring(1)); /** quita el @ */
+                        grafo.addUsers(linea.substring(1));
                     }
                 } 
                 else if (estado.equals("relaciones")) {
-                    /** separa el origen y destino con una coma */
                     int coma = -1;
                     for (int i = 0; i < linea.length(); i++) {
                         if (linea.charAt(i) == ',') {
@@ -125,12 +153,10 @@ public class LectorArchivo {
                     }
 
                     if (coma != -1) {
-                        String enlace1 = linea.substring(0, coma).trim().substring(1); /** quita el @ */
-                        String enlace2 = linea.substring(coma + 1).trim().substring(1); /** quita el @ */
-                        /** se agregan los usuarios en caso de no existir */
+                        String enlace1 = linea.substring(0, coma).trim().substring(1); 
+                        String enlace2 = linea.substring(coma + 1).trim().substring(1); 
                         grafo.addUsers(enlace1); 
                         grafo.addUsers(enlace2);
-                        /** se agrega la conexion */
                         grafo.addConexion(enlace1, enlace2);
                     }
                 }
@@ -138,12 +164,17 @@ public class LectorArchivo {
         }
     }
     
-     /** Método para cuando el usuario guarde */
+     /** Método para cuando el usuario guarde
+      * 
+      */
     public void Guardado() {
         this.datosmod = false;
     }
     
-    /**Metodo para Actuualizar el repositorio*/
+    /**Metodo para Actuualizar el repositorio
+     * 
+     * @param grafo 
+     */
     
     public void actualizarRepo(Grafo grafo){
         if (archivoOriginal == null) {

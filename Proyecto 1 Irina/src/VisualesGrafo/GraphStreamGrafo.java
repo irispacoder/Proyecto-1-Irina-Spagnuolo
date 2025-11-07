@@ -3,12 +3,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package VisualesGrafo;
+/**Estos fueron los imports permitidos
+ * 
+ */
 import org.graphstream.graph.*;
 import org.graphstream.graph.implementations.*;
 import proyecto.pkg1.irina.Grafo;
 import proyecto.pkg1.irina.InfoUsuario;
 import proyecto.pkg1.irina.Nodo;
 
+/**Clase donde se trabaja todo lo relacionado al graph stream
+ * 
+ *
+ */
 public class GraphStreamGrafo {
     public static void Show(Grafo grafo){
         if (grafo == null || grafo.getUsers().pfirst == null) {
@@ -24,6 +31,9 @@ public class GraphStreamGrafo {
             String nombre = usuario.nombre;
             int cfcID = usuario.cfcID;
 
+            /**Aqui se clasifica el color de la conexion dependiendo de la fuerza de esta misma
+             * 
+             */
             Node nodo = graph.addNode(nombre);
             nodo.setAttribute("ui.label", "@" + nombre);
             String tipo = grafo.tipoRelacion(nombre);
@@ -56,7 +66,9 @@ public class GraphStreamGrafo {
         
          
         
-        
+        /**Esto es la parte visual de el graph stream
+         * 
+         */
         graph.setAttribute("ui.stylesheet", 
             "node {" +        
             "   size: 30px;" +                  

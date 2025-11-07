@@ -4,17 +4,26 @@
  */
 package proyecto.pkg1.irina;
 
+/**Clase que repreesenta a un grafo compuesto de usuarios y sus relacios entre ellos
+ * 
+ */
 public class Grafo {
     private Lista<InfoUsuario> users;
     private int cantidad;
     
-    /** se utiliza para pasar la cantidad de usuarios */
+    /** COnstructor que inicializa el grafo vacio
+     * 
+     */
     public Grafo(){
         this.users = new Lista<>();
         this.cantidad = 0;
     }
     
-    /** busca el usuario del que se quiere saber */
+    /** Metodo que busca el usuario
+     * 
+     * @param nombre
+     * @return 
+     */
     public InfoUsuario searchUser(String nombre){
         Nodo<InfoUsuario> aux = this.getUsers().pfirst;
         while (aux != null){
@@ -26,8 +35,11 @@ public class Grafo {
     return null;
     }
     
-    /**Metodo que agrega los usuarios*/
-    
+    /**Metodo que agrega los usuarios al grafo
+     * 
+     * @param nombre
+     * @return 
+     */
     public boolean addUsers(String nombre){
         if (searchUser(nombre)== null) {
             InfoUsuario nuevoUsuario = new InfoUsuario(nombre);
@@ -38,7 +50,11 @@ public class Grafo {
         return false;
     }
     
-    /**Metodo que agrega la relación que tiene un usuario con otro*/
+    /**Metodo que agrega la relación que tiene un usuario con otro
+     * 
+     * @param persona
+     * @param relacionado 
+     */
     public void addConexion(String persona, String relacionado){
         InfoUsuario user = searchUser(persona);
         if (user != null) {
@@ -49,24 +65,10 @@ public class Grafo {
         }
     }
     
-    /**Metodo para imprimir el grafo, hasta ahora este metodo es solo para hacer pruebas*/
-    public void printGrafo(){
-        Nodo<InfoUsuario> actual = getUsers().pfirst;
-            while (actual != null) {
-                InfoUsuario u = actual.getDato();
-                System.out.println("@" + u.nombre + "-");
-                Nodo<String> aux = u.conexion.pfirst;
-                while (aux != null) {
-                System.out.print("@" + aux.getDato() + " ");
-                aux = aux.getPnext();
-            }
-        System.out.println();
-        actual = actual.getPnext();
-        }
-    }
-    
-    /**Metodo que elimina usuarios ademas tambien elimina su conexion a otros usuarios*/
-    
+    /**Metodo que elimina usuarios ademas tambien elimina su conexion a otros usuarios
+     * 
+     * @param nombre 
+     */
     public void deleteUser(String nombre) {
         Nodo<InfoUsuario> actual = getUsers().pfirst;
         Nodo<InfoUsuario> previo = null;
@@ -109,6 +111,9 @@ public class Grafo {
         }
     }
     
+    /**Algoritmo Kosaraju
+     * 
+     */
     public void Kosaraju(){
         Pila<String> pila = new Pila<>();
         Nodo<InfoUsuario> actual = users.pfirst;
@@ -156,6 +161,11 @@ public class Grafo {
 
 }
     
+    /**Primera DFS, orden de finalizacion
+     * 
+     * @param u
+     * @param pila 
+     */
     public void DFS1(InfoUsuario u, Pila<String> pila){
         u.visitado = true;
         Nodo<String> vecino = u.conexion.pfirst;
@@ -169,6 +179,10 @@ public class Grafo {
         pila.Agregar(u.nombre);
     }
     
+    /**Metodo que invierte o transpone el grafo
+     * 
+     * @return 
+     */
     public Grafo transponer(){
         Grafo transpuesto = new Grafo();
         Nodo<InfoUsuario> actual = users.pfirst;
@@ -191,6 +205,11 @@ public class Grafo {
         return transpuesto;
     }
     
+    /**Segunda DFS que utiliza ya el grafo transpuesto
+     * 
+     * @param u
+     * @param cfcID 
+     */
     public void DFStrans(InfoUsuario u, int cfcID){
         u.visitado = true;
         u.cfcID = cfcID;
@@ -205,6 +224,11 @@ public class Grafo {
         
     }
     
+    /**Metodo para poder clasificar el tipo de relacion ente los usuarios
+     * 
+     * @param nombre
+     * @return 
+     */
     public String tipoRelacion(String nombre) {
         InfoUsuario u = searchUser(nombre);
         if (u == null) return "solo";

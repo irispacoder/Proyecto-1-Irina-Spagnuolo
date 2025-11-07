@@ -13,7 +13,6 @@ package proyecto.pkg1.irina;
 public class Pila<T> {
     private Lista<T> lista;
     private int dato;
-    private NodoPila siguiente;
 
 
     public Pila() {
@@ -21,19 +20,25 @@ public class Pila<T> {
     }
     
     /** Retorna si esta vacia
-     * @return  */
+     * 
+     * @return 
+     */
     public boolean es_vacio() {
         return lista.es_vacio();
     }
     
     /** Se agrega un elemento a la cima de la pila
-     * @param dato */
+     * 
+     * @param dato 
+     */
     public void Agregar(T dato){
         lista.InsertarInicio(dato);
     }
     
     /** Se saca el elemento que esta en la cima y lo devuelve
-     * @return  */
+     * 
+     * @return 
+     */
     public T Quitar(){
         if (this.es_vacio()){
             throw new RuntimeException("Lista vacía");
@@ -42,7 +47,9 @@ public class Pila<T> {
     } 
     
     /** Devuelve el elemento que esta en la cima de la pila
-     * @return  */
+     * 
+     * @return 
+     */
     public T Cima(){
         if (this.es_vacio()){
             throw new RuntimeException("Lista vacía");

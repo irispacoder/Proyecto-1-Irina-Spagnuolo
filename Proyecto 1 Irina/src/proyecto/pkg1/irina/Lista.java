@@ -7,26 +7,40 @@ package proyecto.pkg1.irina;
 /**
  *
  * Se implementa una lista enlazada simple para poder manejar los usuarios
+ * @param <T> tipo de dato que almacena la lista
  */
 public class Lista<T> {
     public Nodo<T> pfirst;
     public int size;
 
+    /**Constructor que inicializa la lista vacia
+     * 
+     */
     public Lista() {
         this.pfirst = null;
         this.size = 0;
     }
     
-    /** Nos dice si la lista esta vacia */
+    /** Nos dice si la lista esta vacia
+     * 
+     * @return 
+     */
     public boolean es_vacio(){
         return pfirst == null;
     }
     
+    /**Tamaño de la lista
+     * 
+     * @return 
+     */
     public int Size(){
         return this.size;
     }
     
-    /** Añade un elemento al final de la lista */
+    /** Añade un elemento al final de la lista
+     * 
+     * @param dato 
+     */
     public void InsertarFinal(T dato){
         Nodo<T> nuevo = new Nodo<>(dato);
         if (this.es_vacio()){
@@ -41,7 +55,10 @@ public class Lista<T> {
     this.size++;
     }
     
-    /** Añade un elemento al inicio de la lista */
+    /** Añade un elemento al inicio de la lista
+     * 
+     * @param dato 
+     */
     public void InsertarInicio (T dato){
         Nodo<T> nuevo = new Nodo<>(dato);
         nuevo.setPnext(this.pfirst);
@@ -49,7 +66,11 @@ public class Lista<T> {
         this.size++;
     }
     
-    /** Se obtiene un elemento en el numero que se le pase */
+    /** Se obtiene un elemento en el numero que se le pase
+     * 
+     * @param indice
+     * @return 
+     */
     public T ObtenerIndice(int indice){
         if (indice < 0 || indice >= this.size){
             return null;
@@ -61,7 +82,11 @@ public class Lista<T> {
         return aux.getDato();
         }
     
-    /** Se elimina un elemento en el indice que se indica */
+    /** Se elimina un elemento en el indice que se indica
+     * 
+     * @param indice
+     * @return 
+     */
     public T EliminarIndice(int indice){
         if (indice < 0 || indice >= this.size){
         return null;
@@ -83,8 +108,11 @@ public class Lista<T> {
     return dato;
     }
     
-    /** Busca un dato de la lista y devuelve su indice, en caso de no encontrar
-     devuelve -1 */
+    /** Busca un dato de la lista y devuelve su indice, en caso de no encontrar devuelve -1
+     * 
+     * @param dato
+     * @return 
+     */
     public int indice(T dato){
         Nodo<T> aux = this.pfirst;
         for (int i = 0; i < this.size; i++) {
