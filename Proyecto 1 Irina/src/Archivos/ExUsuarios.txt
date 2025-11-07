@@ -1,17 +1,20 @@
 usuarios
+@irina
+@mc
 @sofia
-@luis
-@natalia
-@arturo
-@miguel
-@juan
-@maria
-@capitan
+@marybel
+@jose
+@cata
+@cap
+@toto
 
 relaciones entre usuarios
-@luis,@natalia
-@luis,@arturo
-@arturo,@luis
-@miguel,@capitan
-@juan,@maria
-@capitan,@miguel
+@irina,@mc
+@irina,@marybel
+@irina,@sofia
+@mc,@irina
+@mc,@marybel
+@sofia,@irina
+@sofia,@jose
+@marybel,@irina
+@cap,@toto

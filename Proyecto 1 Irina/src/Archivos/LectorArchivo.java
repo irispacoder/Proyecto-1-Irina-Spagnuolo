@@ -5,9 +5,7 @@
 package Archivos;
 import proyecto.pkg1.irina.Grafo;
 import proyecto.pkg1.irina.InfoUsuario;
-import proyecto.pkg1.irina.Lista;
 import proyecto.pkg1.irina.Nodo;
-import proyecto.pkg1.irina.Pila;
 
 /**Imports permitidos para usar en el proyecto*/
 
@@ -18,6 +16,7 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.FileWriter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class LectorArchivo {
@@ -54,6 +53,20 @@ public class LectorArchivo {
         if (resultado == JFileChooser.APPROVE_OPTION) {
             File archivo = fileChooser.getSelectedFile();
             this.archivoOriginal = archivo;
+            
+            if (archivo.length() == 0) {
+                try (PrintWriter write = new PrintWriter(new FileWriter(archivo))) {
+                    write.println("usuarios");
+                    write.println();
+                    write.println("relaciones entre usuarios");
+                    write.println();
+                    System.out.println("Usted cargo n archivo vacio, automaticamente se fomrateo para poder ser utilizado"); 
+                } catch (IOException e) {
+                    JOptionPane.showMessageDialog(null, "Error al inicializar el archivo");
+                    return null;
+                }
+                
+            }
             try {
                 /** Crear un nuevo grafo y leer el archivo */
                 Grafo grafo = new Grafo();
@@ -64,8 +77,7 @@ public class LectorArchivo {
                 return grafo; /** Va a devolver el grafo ya construido */
                 
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Error al procesar el archivo: " + e.getMessage(), "Error", 
-                JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Error al procesar el archivo: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 return null;
             }
         }

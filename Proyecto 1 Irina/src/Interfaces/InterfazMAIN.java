@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 import proyecto.pkg1.irina.Grafo;
 
 public class InterfazMAIN extends javax.swing.JFrame {
-    private Grafo grafo;
+    private Grafo grafoActual;
     private Archivos.LectorArchivo Lector;
 
     /**
@@ -16,7 +16,7 @@ public class InterfazMAIN extends javax.swing.JFrame {
      */
     public InterfazMAIN() {
         initComponents();
-        grafo = new Grafo();
+        grafoActual = new Grafo();
         Lector = new Archivos.LectorArchivo();
     }
 
@@ -230,14 +230,14 @@ public class InterfazMAIN extends javax.swing.JFrame {
 
     private void BotonAgregarUSERActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAgregarUSERActionPerformed
 
-        if (grafo == null || grafo.getCantidad() == 0) {
+        if (grafoActual == null) {
             JOptionPane.showMessageDialog(this, "Aun no hay un archivo cargado", "Advertencia", JOptionPane.WARNING_MESSAGE);
             return;
         }
         try {
             String nombre = InputAgregarUser.getText().trim();
             if (!nombre.isEmpty()) {
-                boolean agregando = grafo.addUsers(nombre);
+                boolean agregando = grafoActual.addUsers(nombre);
                 if (agregando) {
                     JOptionPane.showMessageDialog(this, "El usuario que usted agrego fue: " + nombre);
                     InputAgregarUser.setText("");
@@ -252,7 +252,7 @@ public class InterfazMAIN extends javax.swing.JFrame {
 
     private void BotonAgregarCONEXIONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAgregarCONEXIONActionPerformed
         // TODO add your handling code here:
-        if (grafo == null || grafo.getCantidad() == 0) {
+        if (grafoActual == null) {
             JOptionPane.showMessageDialog(this, "Aun no hay un archivo cargado", "Advertencia", JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -263,7 +263,7 @@ public class InterfazMAIN extends javax.swing.JFrame {
                 String[] partesTexto = texto.split(",");
                 String enlace1 = partesTexto[0].trim();
                 String enlace2 = partesTexto[1].trim();
-                grafo.addConexion(enlace1, enlace2);
+                grafoActual.addConexion(enlace1, enlace2);
                 JOptionPane.showMessageDialog(this, "Se agrego la conexio: " + enlace1 + "," + enlace2);
                 InputAgregarConexion.setText("");                
             }
@@ -276,7 +276,7 @@ public class InterfazMAIN extends javax.swing.JFrame {
         try {
             String nombre = InputElimUser.getText().trim();
             if (!nombre.isEmpty()) {
-                grafo.deleteUser(nombre);
+                grafoActual.deleteUser(nombre);
                 JOptionPane.showMessageDialog(this, "Elimino a: " + nombre + " de la lista de usarios");
                 InputElimUser.setText("");                
             }
@@ -297,8 +297,8 @@ public class InterfazMAIN extends javax.swing.JFrame {
         try {
             Grafo newGrafo = Lector.CargarGrafodesdeArchivo();
             if (newGrafo != null) {
-                this.grafo = newGrafo;
-                grafo.printGrafo();
+                this.grafoActual = newGrafo;
+                grafoActual.printGrafo();
                 JOptionPane.showMessageDialog(this, "Su archivo fue cargado y listo para su uso");   
             }
         } catch (Exception e) {
@@ -307,18 +307,18 @@ public class InterfazMAIN extends javax.swing.JFrame {
     }//GEN-LAST:event_BotonCargarArchivosActionPerformed
 
     private void BotonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonActualizarActionPerformed
-        Lector.actualizarRepo(grafo);
+        Lector.actualizarRepo(grafoActual);
     }//GEN-LAST:event_BotonActualizarActionPerformed
 
     private void BotonVisualizarGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonVisualizarGrafoActionPerformed
-        if (grafo == null || grafo.getCantidad() == 0) {
+        if (grafoActual == null || grafoActual.getCantidad() == 0) {
             JOptionPane.showMessageDialog(this, "Aun no hay un archivo cargado", "Advertencia", JOptionPane.WARNING_MESSAGE);
             return;
         }
         
-        if (grafo != null && grafo.getCantidad() > 0) {
-            grafo.Kosaraju();
-            GraphStreamGrafo.Show(grafo);
+        if (grafoActual != null && grafoActual.getCantidad() > 0) {
+            grafoActual.Kosaraju();
+            GraphStreamGrafo.Show(grafoActual);
         } else {
             JOptionPane.showMessageDialog(this, "No hay grafo cargado o está vacío.", "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
