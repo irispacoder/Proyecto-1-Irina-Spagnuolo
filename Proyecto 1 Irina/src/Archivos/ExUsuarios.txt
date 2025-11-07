@@ -4,7 +4,6 @@ usuarios
 @sofia
 @marybel
 @jose
-@cata
 @cap
 @toto
 
