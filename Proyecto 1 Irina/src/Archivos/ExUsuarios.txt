@@ -1,19 +1,21 @@
 usuarios
-@irina
 @mc
 @sofia
 @marybel
 @jose
 @cap
 @toto
+@pedro
+@marco
 
-relaciones entre usuarios
-@irina,@mc
-@irina,@marybel
-@irina,@sofia
-@mc,@irina
+relaciones
 @mc,@marybel
-@sofia,@irina
+@mc,@marco
 @sofia,@jose
-@marybel,@irina
+@marybel,@marco
+@jose,@marco
 @cap,@toto
+@pedro,@toto
+@marco,@jose
+@marco,@marybel
+@marco,@mc

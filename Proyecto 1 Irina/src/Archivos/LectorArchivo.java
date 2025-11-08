@@ -75,7 +75,7 @@ public class LectorArchivo {
                 try (PrintWriter write = new PrintWriter(new FileWriter(archivo))) {
                     write.println("usuarios");
                     write.println();
-                    write.println("relaciones entre usuarios");
+                    write.println("relaciones");
                     write.println();
                     System.out.println("Usted cargo n archivo vacio, automaticamente se fomrateo para poder ser utilizado"); 
                 } catch (IOException e) {
@@ -130,7 +130,7 @@ public class LectorArchivo {
                 if (linea.equalsIgnoreCase("usuarios")) {
                     estado = "usuarios";
                     continue;
-                } else if (linea.equalsIgnoreCase("relaciones entre usuarios")) {
+                } else if (linea.equalsIgnoreCase("relaciones")) {
                     estado = "relaciones";
                     continue;
                 }
@@ -190,8 +190,8 @@ public class LectorArchivo {
               actual = actual.getPnext();    
             }
             
-            pw.println(); // línea en blanco
-            pw.println("relaciones entre usuarios");
+            pw.println();
+            pw.println("relaciones");
             actual = grafo.getUsers().pfirst;
             while (actual != null) {
                 String enlace1 = actual.getDato().nombre;
